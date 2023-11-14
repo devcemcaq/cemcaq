@@ -5,6 +5,12 @@ Version: 0.1.0
 Author: Brayan Hernández Cortés
 Maintainer: Brayan Hernández Cortés <brayannhc07@gmail.com>
 Description: Herramientas para la extracción de datos, cálculo de indices y publicación de calidad del aire.
-License: What license is it under?
+License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
+RoxygenNote: 7.2.3
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Imports: 
+    stringr
