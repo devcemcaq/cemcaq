@@ -1,0 +1,7 @@
+Code,Name,HtmlDisplay,Scale,Precision,Id
+NO2,Dióxido de Nitrógeno,NO<sub>2</sub> (ppm),1,3,1
+CO,Monóxido de Carbono,CO (ppm),1,2,2
+O3,Ozono promedio horario,O<sub>3</sub> (ppm),1,3,3
+SO2,Dióxido de Azufre,SO<sub>2</sub> (ppm),1,3,4
+PM2.5,Material Particulado,PM<sub>2.5</sub> (µg/m<sup>3</sup>),1,0,5
+PM10,Meterial Particulado,PM<sub>10</sub> (µg/m<sup>3</sup>),1,0,6
