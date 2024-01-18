@@ -8,11 +8,20 @@ clear_measurements_dataset <- function(measurements, limits, columns_to_use, cur
   return(measurements)
 }
 
-format_date_time_column <- function(measurements, current_date_time, hours_to_use = 24) {
-  init_date_time <- current_date_time - (hours_to_use * 60 * 60)
-  measurements$Date_Time <- as.POSIXct(measurements$Date_Time)
-  measurements <- measurements[which(measurements$Date_Time > init_date_time & measurements$Date_Time <= current_date_time)]
+format_datetime_column <- function(measurements, current_date_time, datetime_column_name = "Date_Time") {
+  measurements[[datetime_column_name]] <- as.POSIXct(measurements[[datetime_column_name]])
+  # measurements <- measurements[which(measurements$Date_Time > init_date_time & measurements$Date_Time <= current_date_time)]
   measurements <- measurements(order(measurements$Date_Times))
+}
+
+fill_missing_datetime_records <- function(measurements, init_datetime, end_datetime, datetime_column_name = "Date_Time") {
+  if (init_datetime > end_datetime) {
+    stop("init_datetime must be before end_datetime")
+  }
+  desired_datetimes <- data.frame(seq(init_datetime, end_datetime, "hours"))
+  colnames(desired_datetimes) <- datetime_column_name
+  measurements <- merge(desired_datetimes, measurements, all = TRUE)
+  return(measurements)
 }
 
 get_prepared_datasets <- function(measurements, parameters, limits_dataset, hours_to_calculate = 24, date_time_column_name = "DateTime") {
