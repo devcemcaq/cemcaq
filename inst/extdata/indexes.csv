@@ -1,0 +1,8 @@
+Id,Parameter,Name,Hours,Weighted,TimesFactor,RelevantGap,MinRelevantGapRecords
+1,PM10,PM10,12,TRUE,1,3,2
+2,PM2.5,PM2.5,12,TRUE,1,3,2
+3,O3,O38H,8,FALSE,1,0,0
+4,CO,CO,8,FALSE,1,0,0
+5,NO2,NO2,1,FALSE,1,0,0
+6,O3,O3,1,FALSE,1,0,0
+7,SO2,SO2,24,FALSE,1,0,0

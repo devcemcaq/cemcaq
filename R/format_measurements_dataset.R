@@ -1,4 +1,4 @@
-# Limpia los datos
+#'
 clear_measurements_dataset <- function(measurements, limits, columns_to_use, current_date_time, hours_to_use = 24) {
   columns_to_use <- intersect(colnames(measurements), columns_to_use)
   measurements <- measurements[columns_to_use]
