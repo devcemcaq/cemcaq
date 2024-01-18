@@ -51,13 +51,6 @@ get_last_hour_measurement <- function(measurements) {
   return(utils::tail(measurements, n = 1))
 }
 
-#' Calcula el promedio horario
-#'
-#' @param measurements Vector numerico con las mediciones.
-#' @param hours Numero de horas correspondientes al calculo.
-#' @param percentage_min_records Porcentaje minimo de registros que se necesitan para el calculo. Por defecto 75%.
-#'
-#' @return Vector numerico con el promedio calculado
 calculate_hourly_average <- function(measurements, hours, percentage_min_records = 0.75) {
   min_records <- floor(hours * percentage_min_records)
   clean_measurements <- measurements[!is.na(measurements)]
