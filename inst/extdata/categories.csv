@@ -1,0 +1,6 @@
+Id,Quality,RiskLevel,Color,ColorHex
+1,Buena,Bajo,Verde,#00e400
+2,Aceptable,Moderado,Amarillo,#ffff00
+3,Mala,Alto,Naranja,#ff7e00
+4,Muy Mala,Muy Alto,Rojo,#ff0000
+5,Extremadamente Mala,Extremadamente Alto,Morado,#8f3f97

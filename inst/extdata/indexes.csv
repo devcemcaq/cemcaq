@@ -5,4 +5,4 @@ Id,Parameter,Name,Hours,Weighted,TimesFactor,RelevantGap,MinRelevantGapRecords
 4,CO,CO,8,FALSE,1,0,0
 5,NO2,NO2,1,FALSE,1,0,0
 6,O3,O3,1,FALSE,1,0,0
-7,SO2,SO2,24,FALSE,1,0,0
+7,SO2,SO2,1,FALSE,1,0,0
