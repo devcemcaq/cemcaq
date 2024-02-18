@@ -28,8 +28,10 @@ describe("clear_measurements_data", {
     expect_equal(clear_measurements_data(c(1, 6), min_value = 2, max_value = 5), c("IR", "IR"))
   })
 
-  it("Generar un error si los limites son iguales o menjores a 0", {
-    expect_error(clear_measurements_data(1, min_value = 0))
-    expect_error(clear_measurements_data(1, max_value = 0))
+  it("Generar un error si el limite min es mayor al limite maximo", {
+    expect_error(
+      clear_measurements_data(1, min_value = 0, max_value = -1),
+      "Max value must be greater than min value"
+    )
   })
 })

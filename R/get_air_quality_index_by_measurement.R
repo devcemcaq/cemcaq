@@ -1,5 +1,4 @@
-get_air_quality_index_by_measurement <- function(measurements, index_options, intervals, categories, parameters) {
-  parameter_options <- find_row_by_row_name(parameters, index_options$ParameterCode, "Code")
+get_air_quality_index_by_measurement <- function(measurements, index_options, parameter_options, intervals, categories) {
   index <- calculate_measurements_index(
     measurements,
     hours = index_options$Hours,

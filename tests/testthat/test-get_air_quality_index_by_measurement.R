@@ -1,8 +1,8 @@
 describe("get_air_quality_index_by_measurement()", {
   parameters <- data.frame(
-    Id = c(6,5),
+    Id = c(6, 5),
     Code = c("PM10", "PM2.5"),
-    DecimalDigits = c(0,0)
+    DecimalDigits = c(0, 0)
   )
   intervals <- data.frame(
     Id = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),
@@ -17,9 +17,9 @@ describe("get_air_quality_index_by_measurement()", {
     ParameterCode = c("PM10", "PM2.5"),
     Hours = c(12, 12),
     Weighted = c(TRUE, TRUE),
-    RelevantGap = c(3,3),
-    MinRelevantGapRecords = c(2,2),
-    ResultFactor = c(1,1)
+    RelevantGap = c(3, 3),
+    MinRelevantGapRecords = c(2, 2),
+    ResultFactor = c(1, 1)
   )
 
   categories <- data.frame(
@@ -32,8 +32,16 @@ describe("get_air_quality_index_by_measurement()", {
 
   it("Devuelve el indice con buena calidad para PM10", {
     measurements <- c(118, 97, 130, 142, 146, 144, 141, 139, 147, 150, 141, 103)
-    index <- get_air_quality_index_by_measurement(measurements, indexes[1,], intervals, categories, parameters)
+    index_options <- indexes[1,]
+    parameter_options <- parameters[1,]
+    index <- get_air_quality_index_by_measurement(
+      measurements,
+      index_options,
+      parameter_options,
+      intervals,
+      categories
+    )
     expect_true(index$index > 0)
-    expect_equal(index$category[["Id"]], 3)
+    expect_equal(index$category$Id, 3)
   })
 })

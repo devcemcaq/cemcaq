@@ -31,11 +31,8 @@ describe("get_air_quality_index_category_id()", {
     ))
   })
 
-  it("Devuelve error si no se encuentra el parametro", {
-    expect_error(
-      get_air_quality_index_category_id(10, "RANDOM", intervals),
-      "Parameter code does not exists in the intervals dataset"
-    )
+  it("Devuelve 0 si no se encuentra el parametro", {
+    expect_equal(get_air_quality_index_category_id(10, "RANDOM", intervals), 0)
   })
 })
 

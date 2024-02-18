@@ -2,7 +2,7 @@ get_air_quality_index_category_id <- function(index_value, index_code, intervals
   intervals <- intervals[intervals$IndexCode == index_code,]
 
   if (nrow(intervals) < 1) {
-    stop("Parameter code does not exists in the intervals dataset")
+    return(0)
   }
 
   intervals <- intervals[order(intervals$FloorValue, decreasing = FALSE),]
@@ -12,5 +12,5 @@ get_air_quality_index_category_id <- function(index_value, index_code, intervals
     return(utils::tail(intervals, n = 1)[["CategoryId"]])
   }
 
-  stop("There is no intervals that match the index value")
+  return(0)
 }
