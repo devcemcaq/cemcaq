@@ -4,3 +4,5 @@ Id,Quality,RiskLevel,Color,ColorHex
 3,Mala,Alto,Naranja,#ff7e00
 4,Muy Mala,Muy Alto,Rojo,#ff0000
 5,Extremadamente Mala,Extremadamente Alto,Morado,#8f3f97
+0,En mantenimiento,,Blanco,#FFFFFF
+-1,No se mide,,Azul,#ADD8E6

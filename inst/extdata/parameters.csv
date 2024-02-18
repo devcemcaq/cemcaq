@@ -1,4 +1,4 @@
-Code,Name,HtmlDisplay,Scale,Precision,Id
+Code,Name,HtmlDisplay,Scale,DecimalDigits,Id
 NO2,Dióxido de Nitrógeno,NO<sub>2</sub> (ppm),1,3,1
 CO,Monóxido de Carbono,CO (ppm),1,2,2
 O3,Ozono promedio horario,O<sub>3</sub> (ppm),1,3,3

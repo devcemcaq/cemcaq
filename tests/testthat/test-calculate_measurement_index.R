@@ -84,7 +84,7 @@ describe("calculate_measurements_index()", {
   it("Error si relevant_gap no es un valor aceptado para el promedio movil ponderado", {
     measurements <- runif(12, min = 1, max = 10)
     expect_error(
-      calculate_measurements_index(measurements, hours = 12, weighted = TRUE, relevant_gap = 0, min_relevant_records = 0)
+      calculate_measurements_index(measurements, hours = 12, weighted = TRUE, relevant_gap = 0, min_relevant_gap_records = 0)
     )
     expect_error(
       calculate_measurements_index(measurements, hours = 12, weighted = TRUE, relevant_gap = 14)
@@ -94,10 +94,10 @@ describe("calculate_measurements_index()", {
   it("Error si min_relevant_gap no es un valor aceptado para el promedio movil ponderado", {
     measurements <- runif(12, min = 1, max = 10)
     expect_error(
-      calculate_measurements_index(measurements, hours = 12, weighted = TRUE, relevant_gap = 3, min_relevant_records = 0)
+      calculate_measurements_index(measurements, hours = 12, weighted = TRUE, relevant_gap = 3, min_relevant_gap_records = 0)
     )
     expect_error(
-      calculate_measurements_index(measurements, hours = 12, weighted = TRUE, relevant_gap = 3, min_relevant_records = 4)
+      calculate_measurements_index(measurements, hours = 12, weighted = TRUE, relevant_gap = 3, min_relevant_gap_records = 4)
     )
   })
 })

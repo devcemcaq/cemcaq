@@ -3,8 +3,8 @@ round_value <- function(value, digits = 0) {
 }
 
 common.get_measurement_column_names_from_config <- function(parameters, locations, append_columns = NULL) {
-  parameter_codes <- parameters[parameters[["IsComputed"]] < 1,][["Code"]]
-  location_codes <- locations[["Code"]]
+  parameter_codes <- parameters[parameters$IsComputed < 1,]$Code
+  location_codes <- locations$Code
 
   column_names <- NULL
 

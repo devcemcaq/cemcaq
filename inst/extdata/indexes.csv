@@ -1,4 +1,4 @@
-Id,Parameter,Name,Hours,Weighted,TimesFactor,RelevantGap,MinRelevantGapRecords
+Id,ParameterCode,Code,Hours,Weighted,ResultFactor,RelevantGap,MinRelevantGapRecords
 1,PM10,PM10,12,TRUE,1,3,2
 2,PM2.5,PM2.5,12,TRUE,1,3,2
 3,O3,O38H,8,FALSE,1,0,0

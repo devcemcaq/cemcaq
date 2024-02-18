@@ -22,7 +22,7 @@ utils.find_index_by <- function(data, columnName, value) {
   return(which(data[[columnName]] == value)[1])
 }
 
-utils.select_row_by_row_name <- function(data, row_name, column_name_as_key = NULL) {
+find_row_by_row_name <- function(data, row_name, column_name_as_key = NULL) {
   if (!is.null(column_name_as_key)) {
     row.names(data) <- data[[column_name_as_key]]
   }

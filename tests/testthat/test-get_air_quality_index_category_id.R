@@ -25,16 +25,17 @@ describe("get_air_quality_index_category_id()", {
     expect_equal(categoryId, 1)
   })
 
-  it("Devuelve NA si no hay intervalos definidos para el indice", {
-    expect_true(is.na(
-      get_air_quality_index_category_id(0, "PM20", intervals)
-    ))
-  })
-
   it("Devuelve NA si el indice es NULL o NA", {
     expect_true(is.na(
       get_air_quality_index_category_id(NA, "PM10", intervals)
     ))
+  })
+
+  it("Devuelve error si no se encuentra el parametro", {
+    expect_error(
+      get_air_quality_index_category_id(10, "RANDOM", intervals),
+      "Parameter code does not exists in the intervals dataset"
+    )
   })
 })
 

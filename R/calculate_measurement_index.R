@@ -9,7 +9,7 @@
 #' @param relevant_gap Indica cuantos de los registros mas recientes deben considerarse como obligatorios para la
 #' concentracion promedio movil ponderado (weighted = TRUE). No debe ser menor a 0 en caso de usarse, y no debe ser
 #' mayor al valor de hours.
-#' @param min_relevant_records Indica cuantas de las registros mas recientes (indicados por relevant_gap) son
+#' @param min_relevant_gap_records Indica cuantas de las registros mas recientes (indicados por relevant_gap) son
 #' obligatorios para que se puede hacer el calculo para concentración promedio móvil ponderado.
 #'
 #' @return Vector numerico que representa el Indice de calidad del aire.
@@ -31,24 +31,43 @@
 #' )
 #' @export
 calculate_measurements_index <- function(measurements, hours = 1, weighted = FALSE, relevant_gap = 3,
-                                         min_relevant_records = 2) {
+                                         min_relevant_gap_records = 2, decimal_digits = NULL, result_factor = 1) {
   if (hours < 1) {
     stop("Hours must be greater than zero")
   }
 
+  result <- get_result(measurements, hours, weighted, relevant_gap, min_relevant_gap_records)
+
+  return(
+    ifelse(
+      is.null(decimal_digits),
+      result,
+      round(
+        result * result_factor,
+        decimal_digits
+      )
+    )
+  )
+}
+
+get_result <- function(measurements, hours, weighted, relevant_gap, min_relevant_gap_records) {
+  measurements <- utils::tail(measurements, n = hours)
+
   if (hours == 1) {
-    return(get_last_hour_measurement(measurements))
+    return(
+      return(measurements)
+    )
   }
 
   if (weighted) {
-    return(calculate_weighted_moving_concentration(measurements, hours, relevant_gap, min_relevant_records))
+    return(
+      calculate_weighted_moving_concentration(measurements, hours, relevant_gap, min_relevant_gap_records)
+    )
   }
 
-  return(calculate_hourly_average(measurements, hours))
-}
-
-get_last_hour_measurement <- function(measurements) {
-  return(utils::tail(measurements, n = 1))
+  return(
+    calculate_hourly_average(measurements, hours)
+  )
 }
 
 calculate_hourly_average <- function(measurements, hours, percentage_min_records = 0.75) {
@@ -60,7 +79,7 @@ calculate_hourly_average <- function(measurements, hours, percentage_min_records
   return(mean(clean_measurements))
 }
 
-calculate_weighted_moving_concentration <- function(measurements, hours, relevant_gap, min_relevant_records) {
+calculate_weighted_moving_concentration <- function(measurements, hours, relevant_gap, min_relevant_gap_records) {
   if (length(measurements) != hours) {
     stop("Measurements count must be equals to the number of hours to evaluate")
   }
@@ -73,16 +92,16 @@ calculate_weighted_moving_concentration <- function(measurements, hours, relevan
     stop("Relevant gap must be less or equal than the number of hours to evaluate")
   }
 
-  if (min_relevant_records <= 0) {
+  if (min_relevant_gap_records <= 0) {
     stop("Minimum number of relevant records must be greater than zero")
   }
 
-  if (min_relevant_records > relevant_gap) {
+  if (min_relevant_gap_records > relevant_gap) {
     stop("Minimum number of relevant records must be less or equal than the relevant gap value")
   }
 
   relevant_gap <- utils::tail(measurements, n = relevant_gap)
-  if (length(relevant_gap[!is.na(relevant_gap)]) < min_relevant_records) {
+  if (length(relevant_gap[!is.na(relevant_gap)]) < min_relevant_gap_records) {
     return(NA)
   }
 
