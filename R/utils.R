@@ -29,3 +29,7 @@ find_row_by_row_name <- function(data, row_name, column_name_as_key = NULL) {
 
   return(data[row_name,])
 }
+
+find_row_by <- function(data, column_name, value) {
+  return(data[which(data[[column_name]] == value, arr.ind = TRUE),])
+}

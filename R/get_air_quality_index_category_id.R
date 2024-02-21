@@ -1,7 +1,6 @@
 get_air_quality_index_category_id <- function(index_value, index_code, intervals) {
   intervals <- intervals[intervals$IndexCode == index_code,]
-
-  if (nrow(intervals) < 1) {
+  if (nrow(intervals) < 1 || is.na(index_value)) {
     return(0)
   }
 

@@ -12,6 +12,7 @@ describe("generate_hourly_air_quality_index_report()", {
 
     report <- generate_hourly_air_quality_index_report(date_time, measurements_data, control, limits, intervals,
                                                        locations, parameters, categories, indexes)
+
     expect_no_error(report)
   })
 })
