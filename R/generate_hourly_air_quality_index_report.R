@@ -2,6 +2,8 @@ generate_hourly_air_quality_index_report <- function(date_time, measurements_dat
                                                      locations, parameters, categories, indexes) {
   report <- list()
 
+  location_codes <- colnames(control)[-1]
+
   for (control_index in seq_len(nrow(control))) {
     control_row <- control[control_index,]
     index_code <- control_row$IndexCode
@@ -29,7 +31,10 @@ generate_hourly_air_quality_index_report <- function(date_time, measurements_dat
 
   return(list(
     DateTime = date_time,
-    Locations = dataframe_to_list_with_key(locations, "Code"),
+    Locations = dataframe_to_list_with_key(
+      get_locations_filtered_and_ordered_by_control(locations, location_codes),
+      "Code"
+    ),
     Parameters = dataframe_to_list_with_key(parameters, "Code"),
     Categories = dataframe_to_list_with_key(categories, "Id"),
     Results = report
@@ -52,7 +57,13 @@ get_index <- function(index_options, location_code, index_status, measurements_d
 
   parameter_options <- find_row_by(parameters, "Code", index_options$ParameterCode)
 
-  measurements <- as.numeric(clear_measurements_data(measurements, limit_values$Min, limit_values$Max))
+  measurements <- as.numeric(
+    clear_measurements_data(
+      measurements,
+      limit_values$Min,
+      limit_values$Max
+    )
+  ) * parameter_options$Scale
 
   index <- get_air_quality_index_by_measurement(
     measurements,
@@ -67,4 +78,10 @@ get_index <- function(index_options, location_code, index_status, measurements_d
   index$ParameterCode <- index_options$ParameterCode
 
   return(index)
+}
+
+get_locations_filtered_and_ordered_by_control <- function(locations, location_codes) {
+  row.names(locations) <- locations$Code
+
+  return(locations[location_codes,])
 }

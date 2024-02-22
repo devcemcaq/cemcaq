@@ -25,14 +25,18 @@ describe("get_air_quality_index_category_id()", {
     expect_equal(categoryId, 1)
   })
 
-  it("Devuelve NA si el indice es NULL o NA", {
-    expect_true(is.na(
-      get_air_quality_index_category_id(NA, "PM10", intervals)
-    ))
+  it("Devuelve 0 si el indice es NULL o NA", {
+    expect_equal(
+      get_air_quality_index_category_id(NA, "PM10", intervals),
+      0
+    )
   })
 
   it("Devuelve 0 si no se encuentra el parametro", {
-    expect_equal(get_air_quality_index_category_id(10, "RANDOM", intervals), 0)
+    expect_equal(
+      get_air_quality_index_category_id(10, "RANDOM", intervals),
+      0
+    )
   })
 })
 

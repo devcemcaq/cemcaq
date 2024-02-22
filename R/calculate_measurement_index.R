@@ -41,7 +41,7 @@ calculate_measurements_index <- function(measurements, hours = 1, weighted = FAL
   return(
     ifelse(
       is.null(decimal_digits),
-      result,
+      result * result_factor,
       round(
         result * result_factor,
         decimal_digits

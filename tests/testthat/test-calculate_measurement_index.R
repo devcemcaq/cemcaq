@@ -20,13 +20,18 @@ describe("calculate_measurements_index()", {
   it("Obtiene la concentracion promedio movil de 8 horas con 75% de los datos", {
     measurements <- runif(6, min = 1, max = 10)
 
-    expect_equal(calculate_measurements_index(measurements, hours = 8), mean(measurements))
+    expect_equal(
+      calculate_measurements_index(measurements, hours = 8),
+      mean(measurements)
+    )
   })
 
   it("Obteniendo la concentracion promedio movil de 8 horas con menos 75% de los datos devuelve NA", {
     measurements <- runif(5, min = 1, max = 10)
 
-    expect_equal(calculate_measurements_index(measurements, hours = 8), NA)
+    expect_true(
+      is.na(calculate_measurements_index(measurements, hours = 8))
+    )
   })
 
   it("Arroja un error cuando se establece el valor de hours menor a 0", {

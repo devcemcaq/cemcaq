@@ -10,8 +10,8 @@ describe("generate_hourly_air_quality_index_report()", {
     indexes <- read.csv(system.file("extdata", "indexes.csv", package = "CEMCAQ"))
     date_time <- as.POSIXct("2023-11-21 10:00:00")
 
-    report <- generate_hourly_air_quality_index_report(date_time, measurements_data, control, limits, intervals,
-                                                       locations, parameters, categories, indexes)
+    report <-  suppressWarnings(generate_hourly_air_quality_index_report(date_time, measurements_data, control, limits, intervals,
+                                                       locations, parameters, categories, indexes))
     # print(toJSON(report, auto_unbox = TRUE, na = "null", pretty = TRUE))
 
     expect_no_error(report)

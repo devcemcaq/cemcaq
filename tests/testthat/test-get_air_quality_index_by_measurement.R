@@ -37,11 +37,12 @@ describe("get_air_quality_index_by_measurement()", {
     index <- get_air_quality_index_by_measurement(
       measurements,
       index_options,
-      parameter_options,
+      parameter_options$DecimalDigits,
       intervals,
-      categories
+      categories,
+      1
     )
-    expect_true(index$index > 0)
-    expect_equal(index$category$Id, 3)
+    expect_true(index$Index > 0)
+    expect_equal(index$CategoryId, 3)
   })
 })
