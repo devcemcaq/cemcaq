@@ -1,5 +1,5 @@
-get_air_quality_index_by_measurement <- function(measurements, index_options, parameter_options, intervals, categories, status) {
-  result <- get_index_and_category_id(measurements, index_options, parameter_options, intervals, status)
+get_air_quality_index_by_measurement <- function(measurements, index_options, parameter_decimal_digits, intervals, categories, status) {
+  result <- get_index_and_category_id(measurements, index_options, parameter_decimal_digits, intervals, status)
   category <- find_row_by(categories, "Id", result$CategoryId)
 
   if (nrow(category) < 1) {
@@ -8,11 +8,11 @@ get_air_quality_index_by_measurement <- function(measurements, index_options, pa
 
   return(list(
     Index = result$Index,
-    Category = as.list(category)
+    CategoryId = result$CategoryId
   ))
 }
 
-get_index_and_category_id <- function(measurements, index_options, parameter_options, intervals, status) {
+get_index_and_category_id <- function(measurements, index_options, parameter_decimal_digits, intervals, status) {
   if (status == -1) {
     return(list(
       Index = NA,
@@ -27,11 +27,11 @@ get_index_and_category_id <- function(measurements, index_options, parameter_opt
       weighted = index_options$Weighted,
       relevant_gap = index_options$RelevantGap,
       min_relevant_gap_records = index_options$MinRelevantGapRecords,
-      decimal_digits = parameter_options$DecimalDigits,
+      decimal_digits = parameter_decimal_digits,
       result_factor = index_options$ResultFactor
     )
 
-    category_id <- get_air_quality_index_category_id(index, parameter_options$Code, intervals)
+    category_id <- get_air_quality_index_category_id(index, index_options$ParameterCode, intervals)
 
     return(list(
       Index = index,

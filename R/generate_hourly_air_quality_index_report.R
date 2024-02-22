@@ -1,27 +1,37 @@
 generate_hourly_air_quality_index_report <- function(date_time, measurements_data, control, limits, intervals,
                                                      locations, parameters, categories, indexes) {
-  index_control <- get_index_control(control)
-  index_values <- NULL
-  category_values <- data.frame()
-  location_values <- data.frame()
-  parameter_values <- data.frame()
+  report <- list()
 
-  for (i in seq_len(nrow(index_control))) {
-    index <- get_index(index_control[i,], measurements_data, indexes, intervals, categories, parameters, locations, limits)
-    index_values <- append(index_values, index$Index)
+  for (control_index in seq_len(nrow(control))) {
+    control_row <- control[control_index,]
+    index_code <- control_row$IndexCode
+    index_options <- find_row_by(indexes, "Code", index_code)
 
-    category_values <- rbind(category_values, as.data.frame(index$Category))
-    location_values <- rbind(location_values, as.data.frame(index$Location))
-    parameter_values <- rbind(parameter_values, as.data.frame(index$Parameter))
+    index_report <- list()
+    for (location_index in 2:ncol(control_row)) {
+      location_code <- names(control_row)[location_index]
+      index_status <<- control_row[[location_code]]
+
+      index <- get_index(
+        index_options,
+        location_code,
+        index_status,
+        measurements_data,
+        intervals,
+        categories,
+        parameters,
+        limits
+      )
+      index_report[[location_code]] <- index
+    }
+    report[[index_code]] <- index_report
   }
-
-  report <- data.frame(Index = index_values)
-  report$Category <- category_values
-  report$Location <- location_values
-  report$Parameter <- parameter_values
 
   return(list(
     DateTime = date_time,
+    Locations = dataframe_to_list_with_key(locations, "Code"),
+    Parameters = dataframe_to_list_with_key(parameters, "Code"),
+    Categories = dataframe_to_list_with_key(categories, "Id"),
     Results = report
   ))
 }
@@ -31,33 +41,30 @@ get_index_control <- function(control) {
   return(setNames(values, c("IndexCode", "Status", "LocationCode")))
 }
 
-get_index <- function(index_control, measurements_data, indexes, intervals, categories, parameters, locations, limits) {
+get_index <- function(index_options, location_code, index_status, measurements_data, intervals, categories, parameters, limits) {
 
-  status <- index_control$Status
-  index_options <- find_row_by(indexes, "Code", index_control$IndexCode)
   limit_values <- find_row_by(limits, "ParameterCode", index_options$ParameterCode)
 
-  measurement_name <- paste(index_control$LocationCode, index_options$ParameterCode, sep = "_")
+  measurement_name <- paste(location_code, index_options$ParameterCode, sep = "_")
   measurement_name <- str_replace_all(measurement_name, "\\.", "")
 
   measurements <- measurements_data[[measurement_name]]
 
   parameter_options <- find_row_by(parameters, "Code", index_options$ParameterCode)
-  location_options <- find_row_by(locations, "Code", index_control$LocationCode)
 
   measurements <- as.numeric(clear_measurements_data(measurements, limit_values$Min, limit_values$Max))
 
   index <- get_air_quality_index_by_measurement(
     measurements,
     index_options,
-    parameter_options,
+    parameter_options$DecimalDigits,
     intervals,
     categories,
-    status
+    index_status
   )
 
-  index$Location <- location_options
-  index$Parameter <- parameter_options
+  index$LocationCode <- location_code
+  index$ParameterCode <- index_options$ParameterCode
 
   return(index)
 }
