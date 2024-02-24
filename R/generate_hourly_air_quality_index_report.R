@@ -1,9 +1,28 @@
 generate_hourly_air_quality_index_report <- function(date_time, measurements_data, control, limits, intervals,
                                                      locations, parameters, categories, indexes) {
-  report <- list()
-
   location_codes <- colnames(control)[-1]
   index_codes <- control$IndexCode
+
+  report <- get_report(control, indexes, measurements_data, intervals, categories, parameters, limits)
+
+  return(list(
+    DateTime = date_time,
+    Locations = dataframe_to_list_with_key(
+      get_locations_filtered_and_ordered_by_control(locations, location_codes),
+      "Code"
+    ),
+    Indexes = dataframe_to_list_with_key(
+      get_indexes_filtered_and_ordered_by_control(indexes, index_codes),
+      "Code"
+    ),
+    Parameters = dataframe_to_list_with_key(parameters, "Code"),
+    Categories = dataframe_to_list_with_key(categories, "Id"),
+    Results = report
+  ))
+}
+
+get_report <- function(control, indexes, measurements_data, intervals, categories, parameters, limits) {
+  report <- list()
 
   for (control_index in seq_len(nrow(control))) {
     control_row <- control[control_index,]
@@ -30,20 +49,7 @@ generate_hourly_air_quality_index_report <- function(date_time, measurements_dat
     report[[index_code]] <- index_report
   }
 
-  return(list(
-    DateTime = date_time,
-    Locations = dataframe_to_list_with_key(
-      get_locations_filtered_and_ordered_by_control(locations, location_codes),
-      "Code"
-    ),
-    Indexes = dataframe_to_list_with_key(
-      get_indexes_filtered_and_ordered_by_control(indexes, index_codes),
-      "Code"
-    ),
-    Parameters = dataframe_to_list_with_key(parameters, "Code"),
-    Categories = dataframe_to_list_with_key(categories, "Id"),
-    Results = report
-  ))
+  return(report)
 }
 
 get_index_control <- function(control) {

@@ -1,101 +1,46 @@
-#'
-clear_measurements_dataset <- function(measurements, limits, columns_to_use, current_date_time, hours_to_use = 24) {
-  columns_to_use <- intersect(colnames(measurements), columns_to_use)
-  measurements <- measurements[columns_to_use]
+format_measurements_dataset <- function(measurements_data, current_date_time, max_hours, date_time_column_name = "Date_Time") {
+  init_date_time <- get_init_date_time(current_date_time, max_hours)
 
-  measurements <- get_prepared_datasets(measurements, parameters, limits, hours_to_use)
+  measurements_data <- convert_datetime_column_to_date_type(measurements_data, date_time_column_name)
 
-  return(measurements)
+  measurements_data <- filter_by_date_time_interval(measurements_data, init_date_time, current_date_time, date_time_column_name)
+
+  measurements_data <- fill_missing_datetime_records(measurements_data, init_date_time, current_date_time, date_time_column_name)
+
+  measurements_data <- sort_measurements_dataset_by_date_time(measurements_data, date_time_column_name)
+
+  return(measurements_data)
 }
 
-format_datetime_column <- function(measurements, current_date_time, datetime_column_name = "Date_Time") {
-  measurements[[datetime_column_name]] <- as.POSIXct(measurements[[datetime_column_name]])
-  # measurements <- measurements[which(measurements$Date_Time > init_date_time & measurements$Date_Time <= current_date_time)]
-  measurements <- measurements(order(measurements$Date_Times))
+convert_datetime_column_to_date_type <- function(measurements_data, date_time_column_name = "Date_Time") {
+  measurements_data[[date_time_column_name]] <- as.POSIXct(measurements_data[[date_time_column_name]])
+  return(measurements_data)
+}
+
+sort_measurements_dataset_by_date_time <- function(measurements_data, date_time_column_name = "Date_Time") {
+  measurements_data <- measurements_data[order(measurements_data[[date_time_column_name]]),]
+  return(measurements_data)
+}
+
+get_init_date_time <- function(current_date_time, max_hours) {
+  if (max_hours < 1) {
+    stop("max_hours must be greater than 0")
+  }
+  return(current_date_time - as.difftime(max_hours, units = "hours"))
+}
+
+filter_by_date_time_interval <- function(measurements_data, init_date_time, end_date_time, date_time_column_name = "Date_Time") {
+  return(
+    measurements_data[
+      which(
+        measurements_data[[date_time_column_name]] > init_date_time & measurements_data[[date_time_column_name]] <= end_date_time),
+    ]
+  )
 }
 
 fill_missing_datetime_records <- function(measurements, init_datetime, end_datetime, datetime_column_name = "Date_Time") {
-  if (init_datetime > end_datetime) {
-    stop("init_datetime must be before end_datetime")
-  }
-  desired_datetimes <- data.frame(seq(init_datetime, end_datetime, "hours"))
+  desired_datetimes <- data.frame(seq(init_datetime + as.difftime(1, units = "hours"), end_datetime, "hours"))
   colnames(desired_datetimes) <- datetime_column_name
   measurements <- merge(desired_datetimes, measurements, all = TRUE)
   return(measurements)
-}
-
-get_prepared_datasets <- function(measurements, parameters, limits_dataset, hours_to_calculate = 24, date_time_column_name = "DateTime") {
-  selected_measurements <- take_last_n_values(
-    measurements[date_time_column_name], hours_to_calculate
-  )
-
-  ozono_processed_dataset <- selected_measurements
-  ozono_processed_dataset_names <- date_time_column_name
-
-
-  for (column_name in colnames(selected_measurements[, -1])) {
-    column_data <- measurements[column_name]
-
-    column_data_clone <- column_data
-    parameter_code <- common.get_parameter_code_from_column_name(column_name)
-    measurement_scale <- utils.select_row_by_row_name(parameters, parameter_code, "Code")$Scale
-
-
-    column_data <- calculate_measurements_data(
-      column_data, parameter_code, limits_dataset
-    ) / measurement_scale
-
-    digits_to_round <- COMPOUND_DECIMAL_DIGITS[[compound_code]]
-    column_data <- round_values(column_data, digits_to_round)
-
-    selected_measurements <- cbind(selected_measurements, column_data)
-
-    if (parameter_code == "3O") {
-      column_data_clone <- calculate_measurements_data(
-        column_data_clone, "3OM", limits_dataset
-      ) / PARTICLES_PER_MILLION_SCALE
-
-      ozono_processed_dataset <- cbind(
-        ozono_processed_dataset, column_data_clone
-      )
-      ozono_processed_dataset_names <- c(
-        ozono_processed_dataset_names, column_name
-      )
-    }
-  }
-
-  colnames(selected_measurements) <- colnames(measurements)
-  rownames(selected_measurements) <- as.character(1:(HOURS_TO_CALCULATE + 1))
-
-  colnames(ozono_processed_dataset) <- ozono_processed_dataset_names
-  rownames(ozono_processed_dataset) <- as.character(1:(HOURS_TO_CALCULATE + 1))
-
-  return(list(
-    ozono_processed_dataset = ozono_processed_dataset,
-    processed_dataset = selected_measurements
-  ))
-}
-
-take_last_n_values <- function(values, items = 1) {
-  values_count <- nrow(measurements_dataset)
-
-  values <- as.matrix(values)[
-    (values_count - items):values_count
-  ]
-
-  return(values)
-}
-
-
-calculate_measurements_data <- function(data_column, compound_code, limits_dataset) {
-  data_column <- as.numeric(as.character(data_column))
-
-  if (is.element(compound_code, "2C")) {
-    data_column <- legacy.pmn(data_column, 8) # SJU
-  } else if (is.element(compound_code, "4S")) {
-    data_column <- legacy.pmn(data_column, 24)
-  } else if (is.element(compound_code, c("5P", "6P"))) {
-    data_column <- legacy.ppn(data_column, legacy.pppn(data_column, limits_dataset))
-  }
-  return(data_column)
 }
