@@ -27,7 +27,7 @@
 #'  hours=12,
 #'  weighted=TRUE,
 #'  relevant_gap=3,
-#'  min_relevant_records=2
+#'  min_relevant_gap_records=2
 #' )
 #' @export
 calculate_measurements_index <- function(measurements, hours = 1, weighted = FALSE, relevant_gap = 3,

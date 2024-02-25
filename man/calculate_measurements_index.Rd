@@ -9,7 +9,9 @@ calculate_measurements_index(
   hours = 1,
   weighted = FALSE,
   relevant_gap = 3,
-  min_relevant_records = 2
+  min_relevant_gap_records = 2,
+  decimal_digits = NULL,
+  result_factor = 1
 )
 }
 \arguments{
@@ -26,7 +28,7 @@ rellenar con `NAs`.}
 concentracion promedio movil ponderado (weighted = TRUE). No debe ser menor a 0 en caso de usarse, y no debe ser
 mayor al valor de hours.}
 
-\item{min_relevant_records}{Indica cuantas de las registros mas recientes (indicados por relevant_gap) son
+\item{min_relevant_gap_records}{Indica cuantas de las registros mas recientes (indicados por relevant_gap) son
 obligatorios para que se puede hacer el calculo para concentración promedio móvil ponderado.}
 }
 \value{
@@ -48,6 +50,6 @@ index <- calculate_measurements_index(
  hours=12,
  weighted=TRUE,
  relevant_gap=3,
- min_relevant_records=2
+ min_relevant_gap_records=2
 )
 }

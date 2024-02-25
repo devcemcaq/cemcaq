@@ -14,7 +14,7 @@ clear_measurements_data(measurements, min_value = NULL, max_value = NULL)
 \item{max_value}{Valor numerico que indica el valor maximo permitido. NULL por defecto.}
 }
 \value{
-Vector numerico con los valores limpios y banderas correspondientes
+Vector de caracteres con los valores limpios y banderas correspondientes
 }
 \description{
 Aplica una prevalidacion a un vector de dato.

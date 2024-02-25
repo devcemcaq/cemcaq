@@ -3,6 +3,13 @@ generate_hourly_air_quality_index_report <- function(date_time, measurements_dat
   location_codes <- colnames(control)[-1]
   index_codes <- control$IndexCode
 
+  measurements_data <- format_measurements_dataset(
+    measurements_data,
+    date_time,
+    max(indexes$Hours),
+    "Date_Time"
+  )
+
   report <- get_report(control, indexes, measurements_data, intervals, categories, parameters, limits)
 
   return(list(
@@ -62,7 +69,7 @@ get_index <- function(index_options, location_code, index_status, measurements_d
   limit_values <- find_row_by(limits, "ParameterCode", index_options$ParameterCode)
 
   measurement_name <- paste(location_code, index_options$ParameterCode, sep = "_")
-  measurement_name <- str_replace_all(measurement_name, "\\.", "")
+  measurement_name <- stringr::str_replace_all(measurement_name, "\\.", "")
 
   measurements <- measurements_data[[measurement_name]]
 

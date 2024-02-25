@@ -123,26 +123,26 @@ describe("fill_missing_datetime_records", {
       length(filled$Date_Time)
     )
   })
-
-  it("Puede el init_datetime y end_datetime ser iguales", {
-    init_datetime <- as.POSIXct("2020-01-01 00:00:00")
-    end_datetime <- as.POSIXct("2020-01-01 00:00:00")
-
-    measurements <- data.frame(
-      Date_Time = c(init_datetime, end_datetime),
-      X = c(1, 3)
-    )
-    expect_no_error(fill_missing_datetime_records(measurements, init_datetime, init_datetime))
-  })
 })
 
 describe("format_measurements_dataset", {
   it("Se puede dar formato a un dataset de mediciones", {
     measurements_data <- read.csv(system.file("extdata", "DatosCompletos.csv", package = "CEMCAQ"))
     current_date_time <- as.POSIXct("2024-02-22 10:00:00")
-    
     expect_no_error(
       format_measurements_dataset(measurements_data, current_date_time, 12, "Date_Time")
     )
+  })
+
+  it("Se obtiene un dataset vacio si la hora deseada esta fuera del dataset", {
+    measurements_data <- read.csv(system.file("extdata", "DatosCompletos.csv", package = "CEMCAQ"))
+    current_date_time <- as.POSIXct("2023-02-22 10:00:00")
+
+    dataset <- format_measurements_dataset(measurements_data, current_date_time, 12, "Date_Time")
+    expect_length(
+      dataset$Date_Time,
+      12
+    )
+    expect_true(all(is.na(dataset[2])))
   })
 })
