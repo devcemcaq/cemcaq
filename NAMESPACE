@@ -2,3 +2,4 @@
 
 export(calculate_measurements_index)
 export(clear_measurements_data)
+export(generate_hourly_air_quality_index_report)

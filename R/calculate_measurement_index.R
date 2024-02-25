@@ -11,6 +11,9 @@
 #' mayor al valor de hours.
 #' @param min_relevant_gap_records Indica cuantas de las registros mas recientes (indicados por relevant_gap) son
 #' obligatorios para que se puede hacer el calculo para concentración promedio móvil ponderado.
+#' @param decimal_digits Indica la cantidad de digitos decimales (a la derecha del punto decimal) que
+#' se consideraran para el redondeo del resultado final. Por defecto es NULL (si es NULL no se realiza redondeo).
+#' @param result_factor Valor numérico que se utiliza para multiplicar el resultado final. Por defecto 1.
 #'
 #' @return Vector numerico que representa el Indice de calidad del aire.
 #'

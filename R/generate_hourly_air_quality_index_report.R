@@ -1,3 +1,26 @@
+#' Genera un reporte horario con los indices de calidad del aire
+#' correspondientes a la hora y fecha indicada.
+#'
+#' @param date_time Indica un valor de tipo hora y fecha que indica un momento concreto para generar el reporte de
+#' calidad del aire.
+#' @param measurements_data Es un dataframe con los datos de las estaciones con los distintos parametros que son usados
+#' para calcular los indices de calidad del aire.
+#' @param control Es un dataframe que indica las estaciones e indices que se van a calcular, así como notar cuáles
+#' modulos estan en mantenimiento o desactivados.
+#' @param limits Dataframe que indica los valores minimos y maximos de los contaminantes que se usaran para los calculos.
+#' @param intervals Dataframe que indica los rangos de los indices de calidad del aire y a qué nivel de riesgo o
+#' categoria de calidad del aire corresponden.
+#' @param locations Tabla que registra las ubicaciones o estaciones en donde se extraen las mediciones.
+#' @param parameters Indica los parametros o contaminantes e informacion sobre su comportamiento para los calculos.
+#' @param categories Registro de las categorias o niveles de riesgo de calidad del aire.
+#' @param indexes Indica cómo o qué consideran los indices para su calculo, asi como a que parametro corresponden y
+#' que ajustes de harán para calcular el indice de calidad del aire.
+#'
+#' @return Devuelve una lista con la hora y fecha del reporte, las ubicaciones consideradas, los parametros o contaminantes,
+#' las categorias de calidad del aire, los indices y que consideran para el calculo, y los resultados, que contienen
+#' todos los resultados de cada indice calculado.
+#'
+#' @export
 generate_hourly_air_quality_index_report <- function(date_time, measurements_data, control, limits, intervals,
                                                      locations, parameters, categories, indexes) {
   location_codes <- colnames(control)[-1]
@@ -39,7 +62,7 @@ get_report <- function(control, indexes, measurements_data, intervals, categorie
     index_report <- list()
     for (location_index in 2:ncol(control_row)) {
       location_code <- names(control_row)[location_index]
-      index_status <<- control_row[[location_code]]
+      index_status <- control_row[[location_code]]
 
       index <- get_index(
         index_options,
@@ -57,11 +80,6 @@ get_report <- function(control, indexes, measurements_data, intervals, categorie
   }
 
   return(report)
-}
-
-get_index_control <- function(control) {
-  values <- cbind(control[1], stack(control[-1]))
-  return(setNames(values, c("IndexCode", "Status", "LocationCode")))
 }
 
 get_index <- function(index_options, location_code, index_status, measurements_data, intervals, categories, parameters, limits) {
