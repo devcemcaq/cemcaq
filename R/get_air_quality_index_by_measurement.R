@@ -31,7 +31,7 @@ get_index_and_category_id <- function(measurements, index_options, parameter_dec
       result_factor = index_options$ResultFactor
     )
 
-    category_id <- get_air_quality_index_category_id(index, index_options$ParameterCode, intervals)
+    category_id <- get_air_quality_index_category_id(index, index_options$Code, intervals)
 
     return(list(
       Index = index,
