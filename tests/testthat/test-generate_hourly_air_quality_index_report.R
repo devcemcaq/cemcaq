@@ -12,6 +12,7 @@ describe("generate_hourly_air_quality_index_report()", {
 
     report <- suppressWarnings(generate_hourly_air_quality_index_report(date_time, measurements_data, control, limits, intervals,
                                                                         locations, parameters, categories, indexes))
+    # write(toJSON(report, auto_unbox = TRUE, na = "null", pretty = TRUE), "test.json")
     expect_true(
       length(report$Indexes) > 0
     )
@@ -34,5 +35,4 @@ describe("generate_hourly_air_quality_index_report()", {
       length(report$Indexes) > 0
     )
   })
-
 })

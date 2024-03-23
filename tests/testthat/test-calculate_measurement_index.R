@@ -54,6 +54,14 @@ describe("calculate_measurements_index()", {
     expect_equal(round(index), 129)
   })
 
+  it("Calcular promedio movil ponderado 12 horas con factor de ajuste", {
+    measurements <- c(50, 80, 75, 90, 82, 53, 64, 74, 21, 10, 16, 13)
+
+    index <- calculate_measurements_index(
+      measurements, hours = 12, weighted = TRUE, result_factor = 0.694)
+    expect_equal(round(index), 12)
+  })
+
   it("Calcular promedio movil ponderado 12 horas con 2 de las 3 horas mas recientes", {
     measurements <- c(50, 80, 75, 90, 82, 53, 64, 74, 21, 10, NA, 13)
     expect_false(is.na(calculate_measurements_index(measurements, hours = 12, weighted = TRUE)))
