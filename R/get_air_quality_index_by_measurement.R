@@ -28,7 +28,8 @@ get_index_and_category_id <- function(measurements, index_options, parameter_dec
       relevant_gap = index_options$RelevantGap,
       min_relevant_gap_records = index_options$MinRelevantGapRecords,
       decimal_digits = parameter_decimal_digits,
-      result_factor = index_options$ResultFactor
+      result_factor = index_options$ResultFactor,
+      use_max_value = index_options$UseMaxValue
     )
 
     category_id <- get_air_quality_index_category_id(index, index_options$ParameterCode, intervals)

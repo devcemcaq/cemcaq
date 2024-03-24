@@ -11,7 +11,8 @@ calculate_measurements_index(
   relevant_gap = 3,
   min_relevant_gap_records = 2,
   decimal_digits = NULL,
-  result_factor = 1
+  result_factor = 1,
+  use_max_value = FALSE
 )
 }
 \arguments{
@@ -35,6 +36,8 @@ obligatorios para que se puede hacer el calculo para concentración promedio mó
 se consideraran para el redondeo del resultado final. Por defecto es NULL (si es NULL no se realiza redondeo).}
 
 \item{result_factor}{Valor numérico que se utiliza para multiplicar el resultado final. Por defecto 1.}
+
+\item{use_max_value}{Indica si se busca el valor máximo de los datos proporcionados en lugar de un promedio. Por defecto FALSE.}
 }
 \value{
 Vector numerico que representa el Indice de calidad del aire.
