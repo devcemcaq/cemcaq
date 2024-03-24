@@ -19,3 +19,15 @@ dataframe_to_list_with_key <- function(data, key_name) {
   }
   return(data_list)
 }
+
+get_locations_filtered_and_ordered_by_control <- function(locations, location_codes) {
+  row.names(locations) <- locations$Code
+
+  return(locations[location_codes,])
+}
+
+get_indexes_filtered_and_ordered_by_control <- function(indexes, index_codes) {
+  row.names(indexes) <- indexes$Code
+
+  return(indexes[index_codes,])
+}

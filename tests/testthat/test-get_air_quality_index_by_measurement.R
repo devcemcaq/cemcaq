@@ -19,7 +19,8 @@ describe("get_air_quality_index_by_measurement()", {
     Weighted = c(TRUE, TRUE),
     RelevantGap = c(3, 3),
     MinRelevantGapRecords = c(2, 2),
-    ResultFactor = c(1, 1)
+    ResultFactor = c(1, 1),
+    UseMaxValue = c(FALSE, FALSE)
   )
 
   categories <- data.frame(

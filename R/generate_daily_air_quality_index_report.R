@@ -21,8 +21,8 @@
 #' todos los resultados de cada indice calculado.
 #'
 #' @export
-generate_hourly_air_quality_index_report <- function(date_time, measurements_data, control, limits, intervals,
-                                                     locations, parameters, categories, indexes) {
+generate_daily_air_quality_index_report <- function(date_time, measurements_data, control, limits,
+                                                    intervals, locations, parameters, categories, indexes) {
   location_codes <- colnames(control)[-1]
   index_codes <- control$IndexCode
 
@@ -33,7 +33,7 @@ generate_hourly_air_quality_index_report <- function(date_time, measurements_dat
     "Date_Time"
   )
 
-  report <- get_report(control, indexes, measurements_data, intervals, categories, parameters, limits)
+  report <- get_daily_report(control, indexes, measurements_data, intervals, categories, parameters, limits)
 
   return(list(
     DateTime = date_time,
@@ -51,7 +51,7 @@ generate_hourly_air_quality_index_report <- function(date_time, measurements_dat
   ))
 }
 
-get_report <- function(control, indexes, measurements_data, intervals, categories, parameters, limits) {
+get_daily_report <- function(control, indexes, measurements_data, intervals, categories, parameters, limits) {
   report <- list()
 
   for (control_index in seq_len(nrow(control))) {
@@ -64,7 +64,7 @@ get_report <- function(control, indexes, measurements_data, intervals, categorie
       location_code <- names(control_row)[location_index]
       index_status <- control_row[[location_code]]
 
-      index <- get_index(
+      index <- get_daily_index(
         index_options,
         location_code,
         index_status,
@@ -82,24 +82,30 @@ get_report <- function(control, indexes, measurements_data, intervals, categorie
   return(report)
 }
 
-get_index <- function(index_options, location_code, index_status, measurements_data, intervals, categories, parameters, limits) {
-
-  limit_values <- find_row_by(limits, "ParameterCode", index_options$ParameterCode)
-
-  measurement_name <- paste(location_code, index_options$ParameterCode, sep = "_")
+get_daily_index <- function(index_options, location_code, index_status, measurements_data, intervals,
+                            categories, parameters, limits) {
+  measurement_name <- paste0(
+    location_code,
+    "_",
+    ifelse(index_options$UseIndexValue, index_options$Code, index_options$ParameterCode),
+    ifelse(index_options$UseIndexValue, "I", "")
+  )
   measurement_name <- stringr::str_replace_all(measurement_name, "\\.", "")
 
   measurements <- measurements_data[[measurement_name]]
 
   parameter_options <- find_row_by(parameters, "Code", index_options$ParameterCode)
 
-  measurements <- as.numeric(
-    clear_measurements_data(
-      measurements,
-      limit_values$Min,
-      limit_values$Max
-    )
-  ) * parameter_options$Scale
+  if (!index_options$UseIndexValue) {
+    limit_values <- find_row_by(limits, "ParameterCode", index_options$ParameterCode)
+    measurements <- as.numeric(
+      clear_measurements_data(
+        measurements,
+        limit_values$Min,
+        limit_values$Max
+      )
+    ) * parameter_options$Scale
+  }
 
   index <- get_air_quality_index_by_measurement(
     measurements,

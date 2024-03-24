@@ -14,6 +14,7 @@
 #' @param decimal_digits Indica la cantidad de digitos decimales (a la derecha del punto decimal) que
 #' se consideraran para el redondeo del resultado final. Por defecto es NULL (si es NULL no se realiza redondeo).
 #' @param result_factor Valor numérico que se utiliza para multiplicar el resultado final. Por defecto 1.
+#' @param use_max_value Indica si se busca el valor máximo de los datos proporcionados en lugar de un promedio. Por defecto FALSE.
 #'
 #' @return Vector numerico que representa el Indice de calidad del aire.
 #'
@@ -34,12 +35,12 @@
 #' )
 #' @export
 calculate_measurements_index <- function(measurements, hours = 1, weighted = FALSE, relevant_gap = 3,
-                                         min_relevant_gap_records = 2, decimal_digits = NULL, result_factor = 1) {
+                                         min_relevant_gap_records = 2, decimal_digits = NULL, result_factor = 1, use_max_value = FALSE) {
   if (hours < 1) {
     stop("Hours must be greater than zero")
   }
 
-  result <- get_result(measurements, hours, weighted, relevant_gap, min_relevant_gap_records)
+  result <- get_result(measurements, hours, weighted, relevant_gap, min_relevant_gap_records, use_max_value)
 
   return(
     ifelse(
@@ -53,8 +54,19 @@ calculate_measurements_index <- function(measurements, hours = 1, weighted = FAL
   )
 }
 
-get_result <- function(measurements, hours, weighted, relevant_gap, min_relevant_gap_records) {
+get_result <- function(measurements, hours, weighted, relevant_gap, min_relevant_gap_records, use_max_value) {
   measurements <- utils::tail(measurements, n = hours)
+
+  if (is.null(measurements) || length(measurements) < 1) {
+    return(NA)
+  }
+
+  if (use_max_value == TRUE) {
+    if (all(is.na(measurements))) {
+      return(NA)
+    }
+    return(max(measurements, na.rm = TRUE))
+  }
 
   if (hours == 1) {
     return(
