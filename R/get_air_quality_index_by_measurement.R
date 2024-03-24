@@ -32,7 +32,7 @@ get_index_and_category_id <- function(measurements, index_options, parameter_dec
       use_max_value = index_options$UseMaxValue
     )
 
-    category_id <- get_air_quality_index_category_id(index, index_options$ParameterCode, intervals)
+    category_id <- get_air_quality_index_category_id(index, index_options$Code, intervals)
 
     return(list(
       Index = index,
