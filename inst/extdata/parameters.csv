@@ -1,7 +1,7 @@
-Code,Name,HtmlDisplay,Scale,DecimalDigits,Id
-NO2,Dióxido de Nitrógeno,NO<sub>2</sub> (ppm),0.001,3,1
-CO,Monóxido de Carbono,CO (ppm),1,2,2
-O3,Ozono,O<sub>3</sub> (ppm),0.001,3,3
-SO2,Dióxido de Azufre,SO<sub>2</sub> (ppm),0.001,3,4
-PM2.5,Material Particulado,PM<sub>2.5</sub> (µg/m<sup>3</sup>),1,0,5
-PM10,Meterial Particulado,PM<sub>10</sub> (µg/m<sup>3</sup>),1,0,6
+Code,Name,HtmlDisplay,Scale,DecimalDigits,Id,WebsiteUrl
+NO2,Dióxido de Nitrógeno,NO<sub>2</sub> (ppm),0.001,3,1,http://aire.cemcaq.mx/dioxido-de-nitrogeno/
+CO,Monóxido de Carbono,CO (ppm),1,2,2,http://aire.cemcaq.mx/monoxido-de-carbono/
+O3,Ozono,O<sub>3</sub> (ppm),0.001,3,3,http://aire.cemcaq.mx/ozono/
+SO2,Dióxido de Azufre,SO<sub>2</sub> (ppm),0.001,3,4,http://aire.cemcaq.mx/dioxido-de-azufre/
+PM2.5,Material Particulado,PM<sub>2.5</sub> (µg/m<sup>3</sup>),1,0,5,http://aire.cemcaq.mx/material-particulado/
+PM10,Meterial Particulado,PM<sub>10</sub> (µg/m<sup>3</sup>),1,0,6,http://aire.cemcaq.mx/material-particulado/
