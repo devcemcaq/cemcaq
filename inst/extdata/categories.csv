@@ -1,8 +1,8 @@
 Id,Quality,RiskLevel,Color,ColorHex
-1,Buena,Bajo,Verde,#00e400
-2,Aceptable,Moderado,Amarillo,#ffff00
-3,Mala,Alto,Naranja,#ff7e00
-4,Muy Mala,Muy Alto,Rojo,#ff0000
-5,Extremadamente Mala,Extremadamente Alto,Morado,#8f3f97
+1,Buena,Bajo,Verde,#00E400
+2,Aceptable,Moderado,Amarillo,#FFFF00
+3,Mala,Alto,Naranja,#FF7E00
+4,Muy Mala,Muy Alto,Rojo,#FF0000
+5,Extremadamente Mala,Extremadamente Alto,Morado,#8F3F97
 0,En mantenimiento,,Blanco,#FFFFFF
 -1,No se mide,,Azul,#ADD8E6

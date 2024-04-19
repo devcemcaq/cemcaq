@@ -112,6 +112,7 @@ get_index <- function(index_options, location_code, index_status, measurements_d
 
   index$LocationCode <- location_code
   index$ParameterCode <- index_options$ParameterCode
+  index$IndexCode <- index_options$Code
 
   return(index)
 }
