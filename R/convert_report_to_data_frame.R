@@ -1,3 +1,6 @@
+#' Convert a report to a data frame
+#' @param report Report either daily or hourly to format
+#' @export
 convert_report_to_data_frame <- function(report) {
   report_frame <- data.frame()
 
