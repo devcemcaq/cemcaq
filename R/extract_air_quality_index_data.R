@@ -28,7 +28,7 @@ extract_air_quality_index_data <- function(connection, start_time, end_time, fil
       parameters <- paste0(
         parameters, ",",
         indexes[[i]]$Column, "_",
-        str_to_lower(locations[j]), " as ",
+        stringr::str_to_lower(locations[j]), " as ",
         locations[j], "_",
         indexes[[i]]$Code,
         sufix_column_names)
@@ -38,6 +38,6 @@ extract_air_quality_index_data <- function(connection, start_time, end_time, fil
   query <- paste0("SELECT ", parameters, " FROM ", vista,
                   " WHERE Date_Time >= '", start_time, "' AND Date_Time <= '", end_time,
                   "' ORDER BY Date_Time ASC")
-  result <- dbGetQuery(connection, query)
+  result <- odbc::dbGetQuery(connection, query)
   return(result)
 }

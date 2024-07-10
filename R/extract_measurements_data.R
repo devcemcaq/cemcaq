@@ -15,6 +15,6 @@ extract_measurements_data <- function(connection, start_time, end_time, prevalid
   query <- paste0("SELECT * FROM ", table_name,
                   " WHERE Date_Time >= '", start_time, "' AND Date_Time <= '", end_time,
                   "' ORDER BY Date_Time ASC")
-  result <- dbGetQuery(connection, query)
+  result <- odbc::dbGetQuery(connection, query)
   return(result)
 }
