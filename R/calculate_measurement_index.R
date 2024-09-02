@@ -42,16 +42,16 @@ calculate_measurements_index <- function(measurements, hours = 1, weighted = FAL
 
   result <- get_result(measurements, hours, weighted, relevant_gap, min_relevant_gap_records, use_max_value)
 
-  return(
-    ifelse(
-      is.null(decimal_digits),
+  result <- ifelse(
+    is.null(decimal_digits),
+    result * result_factor,
+    round(
       result * result_factor,
-      round(
-        result * result_factor,
-        decimal_digits
-      )
+      decimal_digits
     )
   )
+
+  return(ifelse(result <= 0, NA, result))
 }
 
 get_result <- function(measurements, hours, weighted, relevant_gap, min_relevant_gap_records, use_max_value) {
