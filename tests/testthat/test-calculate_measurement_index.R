@@ -62,6 +62,13 @@ describe("calculate_measurements_index()", {
     expect_equal(round(index), 12)
   })
 
+  it("Resultados con un valor de 0 se reciben como NA", {
+    measurements <- 0.37 * 0.001
+
+    index <- calculate_measurements_index(measurements, hours = 1, decimal_digits = 2)
+    expect_true(is.na(index))
+  })
+
   it("Calcular promedio movil ponderado 12 horas con 2 de las 3 horas mas recientes", {
     measurements <- c(50, 80, 75, 90, 82, 53, 64, 74, 21, 10, NA, 13)
     expect_false(is.na(calculate_measurements_index(measurements, hours = 12, weighted = TRUE)))
