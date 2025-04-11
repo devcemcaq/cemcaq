@@ -36,7 +36,7 @@ generate_hourly_air_quality_index_report <- function(date_time, measurements_dat
   report <- get_report(control, indexes, measurements_data, intervals, categories, parameters, limits)
 
   return(list(
-    DateTime = date_time,
+    DateTime = format(report$DateTime, "%Y-%m-%d %H:00:00"),
     Locations = dataframe_to_list_with_key(
       get_locations_filtered_and_ordered_by_control(locations, location_codes),
       "Code"

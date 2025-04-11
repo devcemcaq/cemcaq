@@ -22,7 +22,7 @@ get_frame_cell_data <- function(index_results, result_index, location_index, rep
   category <- report$Categories[[as.character(location_result$CategoryId)]]
   if (result_index == 1 && location_index == 1) {
     cell_result <- paste(
-      format(report$DateTime, "%d/%m/%Y %H:%M"),
+      report$DateTime, "%d/%m/%Y %H:%M",
       ifelse(is.na(location_result$Index), "", location_result$Index),
       category$ColorHex,
       sep = "@"
