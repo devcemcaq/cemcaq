@@ -1,6 +1,6 @@
 Id,ParameterCode,Code,Hours,Weighted,ResultFactor,RelevantGap,MinRelevantGapRecords,Name,UseIndexValue,UseMaxValue
-1,PM10,PM10,12,TRUE,1,3,2,Meterial Particulado,FALSE,FALSE
-2,PM2.5,PM2.5,12,TRUE,1,3,2,Material Particulado,FALSE,FALSE
+1,PM10,PM10,12,TRUE,0.714,3,2,Meterial Particulado,FALSE,FALSE
+2,PM2.5,PM2.5,12,TRUE,0.694,3,2,Material Particulado,FALSE,FALSE
 3,O3,O38H,8,FALSE,1,0,0,Ozono promedio móvil 8 horas,FALSE,FALSE
 4,CO,CO,8,FALSE,1,0,0,Monóxido de Carbono,FALSE,FALSE
 5,NO2,NO2,1,FALSE,1,0,0,Dióxido de Nitrógeno,FALSE,FALSE
