@@ -1,7 +1,7 @@
 Package: CEMCAQ
 Type: Package
 Title: Calidad del Aire en Querétaro
-Version: 0.1.0
+Version: 0.1.1
 Author: Brayan Hernández Cortés
 Maintainer: Brayan Hernández Cortés <brayannhc07@gmail.com>
 Description: Herramientas para la extracción de datos, cálculo de indices y publicación de calidad del aire.
