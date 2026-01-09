@@ -62,11 +62,18 @@ describe("calculate_measurements_index()", {
     expect_equal(round(index), 12)
   })
 
-  it("Resultados con un valor de 0 se reciben como NA", {
+  it("Mediciones con un valor muy cercano a 0 se reciben como 0", {
     measurements <- 0.37 * 0.001
 
     index <- calculate_measurements_index(measurements, hours = 1, decimal_digits = 2)
-    expect_true(is.na(index))
+    expect_equal(index, 0)
+  })
+
+  it("Mediciones con un valor de 0 se reciben como 0", {
+    measurements <- 0
+
+    index <- calculate_measurements_index(measurements, hours = 1, decimal_digits = 2)
+    expect_equal(index, 0)
   })
 
   it("Calcular promedio movil ponderado 12 horas con 2 de las 3 horas mas recientes", {

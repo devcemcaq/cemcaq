@@ -51,7 +51,7 @@ calculate_measurements_index <- function(measurements, hours = 1, weighted = FAL
     )
   )
 
-  return(ifelse(result <= 0, NA, result))
+  return(ifelse(result < 0, NA, result))
 }
 
 get_result <- function(measurements, hours, weighted, relevant_gap, min_relevant_gap_records, use_max_value) {
