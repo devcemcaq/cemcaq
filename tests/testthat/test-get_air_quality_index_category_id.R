@@ -38,5 +38,14 @@ describe("get_air_quality_index_category_id()", {
       0
     )
   })
+  it("Obtiene la categoría 1 (calidad buena) cuando el índice es 0", {
+    categoryId <- get_air_quality_index_category_id(0, "PM10", intervals)
+    expect_equal(categoryId, 1)
+  })
+
+  it("Devuelve 0 cuando el índice es negativo", {
+    categoryId <- get_air_quality_index_category_id(-1, "PM10", intervals)
+    expect_equal(categoryId, 0)
+  })
 })
 
