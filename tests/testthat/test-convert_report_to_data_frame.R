@@ -7,10 +7,11 @@ describe("convert_report_to_csv", {
   parameters <- read.csv(system.file("extdata", "parameters.csv", package = "CEMCAQ"))
   categories <- read.csv(system.file("extdata", "categories.csv", package = "CEMCAQ"))
   indexes <- read.csv(system.file("extdata", "indexes.csv", package = "CEMCAQ"))
+  recommendations <- read.csv(system.file("extdata", "recommendations.csv", package = "CEMCAQ"))
   date_time <- as.POSIXct("2024-03-22 23:00:00")
 
   report <- suppressWarnings(generate_hourly_air_quality_index_report(
-    date_time, measurements_data, control, limits, intervals, locations, parameters, categories, indexes
+    date_time, measurements_data, control, limits, intervals, locations, parameters, categories, indexes, recommendations
   ))
   it("returns a dataframe with report results", {
     csv_report <- convert_report_to_data_frame(report)
