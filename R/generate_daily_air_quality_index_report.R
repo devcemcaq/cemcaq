@@ -15,14 +15,17 @@
 #' @param categories Registro de las categorias o niveles de riesgo de calidad del aire.
 #' @param indexes Indica cómo o qué consideran los indices para su calculo, asi como a que parametro corresponden y
 #' que ajustes de harán para calcular el indice de calidad del aire.
+#' @param recommendations Dataframe con las recomendaciones para la poblacion en general y la poblacion sensible
+#' segun la categoria de calidad del aire.
 #'
 #' @return Devuelve una lista con la hora y fecha del reporte, las ubicaciones consideradas, los parametros o contaminantes,
-#' las categorias de calidad del aire, los indices y que consideran para el calculo, y los resultados, que contienen
-#' todos los resultados de cada indice calculado.
+#' las categorias de calidad del aire, los indices y que consideran para el calculo, las recomendaciones por categoria,
+#' y los resultados, que contienen todos los resultados de cada indice calculado.
 #'
 #' @export
 generate_daily_air_quality_index_report <- function(date_time, measurements_data, control, limits,
-                                                    intervals, locations, parameters, categories, indexes) {
+                                                    intervals, locations, parameters, categories, indexes,
+                                                    recommendations) {
   location_codes <- colnames(control)[-1]
   index_codes <- control$IndexCode
 
@@ -47,6 +50,7 @@ generate_daily_air_quality_index_report <- function(date_time, measurements_data
     ),
     Parameters = dataframe_to_list_with_key(parameters, "Code"),
     Categories = dataframe_to_list_with_key(categories, "Id"),
+    Recommendations = dataframe_to_list_with_key(recommendations, "CategoryId"),
     Results = report
   ))
 }
